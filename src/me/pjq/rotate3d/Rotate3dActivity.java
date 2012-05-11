@@ -12,7 +12,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
@@ -35,7 +38,6 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
     int mCenterY = 155;
     public static final int DURATION = 1000;
     private RelativeLayout mRelativeLayout;
-    private ImageBounds mImageBounds;
 
     public static int HEIGHT = 155;
     public static int WIDTH = 480;
@@ -53,13 +55,6 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
     private ArrayList<Drawable> mDrawableArrayList;
     private ArrayList<ImageView> mImageViewArrayList;
     public static final int MAX_COUNT = 4;
-
-    class ImageBounds {
-        Rect mRect1;
-        Rect mRect2;
-        Rect mRect3;
-        Rect mRect4;
-    }
 
     /** Called when the activity is first created. */
     @Override
@@ -399,25 +394,32 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
             if (i == 0) {
                 mImageViewArrayList.get(i).startAnimation(mRotate3dAnimation);
             } else {
-                // Last item,not animation.
-                // if (i == length - 1) {
                 if (false) {
-                    mImageViewArrayList.get(i).startAnimation(loadLastAnimation());
 
-                } else {
-                    // mImageViewArrayList.get(i).startAnimation(mTranslateAnimation1);
-                    // mImageViewArrayList.get(i).startAnimation(createAlphaScaleAnimation());
-                    if (1 == i) {
-                        mImageViewArrayList.get(i).startAnimation(loadFirstAnimation());
-                    } else if (2 == i) {
-                        mImageViewArrayList.get(i).startAnimation(loadSecondAnimation());
-                    } else if (3 == i) {
-                        mImageViewArrayList.get(i).startAnimation(loadThirdAnimation());
+                    // Last item,not animation.
+                    // if (i == length - 1) {
+                    if (false) {
+                        mImageViewArrayList.get(i).startAnimation(loadLastAnimation());
+
                     } else {
-                        mImageViewArrayList.get(i).startAnimation(loadMiddleAnimation());
-                    }
+                        // mImageViewArrayList.get(i).startAnimation(mTranslateAnimation1);
+                        // mImageViewArrayList.get(i).startAnimation(createAlphaScaleAnimation());
+                        if (1 == i) {
+                            mImageViewArrayList.get(i).startAnimation(loadFirstAnimation());
+                        } else if (2 == i) {
+                            mImageViewArrayList.get(i).startAnimation(loadSecondAnimation());
+                        } else if (3 == i) {
+                            mImageViewArrayList.get(i).startAnimation(loadThirdAnimation());
+                        } else {
+                            mImageViewArrayList.get(i).startAnimation(loadMiddleAnimation());
+                        }
 
+                    }
+                } else {
+
+                    mImageViewArrayList.get(i).startAnimation(createAnimationSet(i));
                 }
+
             }
         }
 
@@ -513,4 +515,33 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
         // AlphaAnimation
     }
 
+    private float mScaleStep = 0.4f;
+
+    private AnimationSet createAnimationSet(int index) {
+        int length = mImageViewArrayList.size();
+
+        AnimationSet animationSet = new AnimationSet(true);
+        // animationSet.setDuration(DURATION);
+        animationSet.setFillAfter(true);
+        float scaleX = getScale(index);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, scaleX, 1f, 1f, WIDTH/2+15,
+                0f);
+        scaleAnimation.setDuration(DURATION);
+        animationSet.addAnimation(scaleAnimation);
+
+        AlphaAnimation alphaAnimation = new AlphaAnimation((length - index - 1) * mScaleStep,
+                (length - index) * mScaleStep);
+        alphaAnimation.setDuration(DURATION);
+        animationSet.addAnimation(alphaAnimation);
+
+        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0,
+                0, topMarginStep);
+        translateAnimation.setDuration(DURATION);
+        animationSet.addAnimation(translateAnimation);
+
+        // View view=new View(getApplicationContext());
+        // view.startAnimation(animationSet);
+        return animationSet;
+
+    }
 }
