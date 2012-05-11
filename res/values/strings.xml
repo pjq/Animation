@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, Rotate3dActivity!</string>
+    <string name="app_name">Rotate3d</string>
+
+    <drawable name="bg_drawable_white">#88ffffff</drawable>
+    <drawable name="bg_drawable_white_solid">#fff</drawable>
+    <drawable name="bg_drawable_white_transparent">#48ffffff</drawable>
+
+</resources>
