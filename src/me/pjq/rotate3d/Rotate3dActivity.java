@@ -30,7 +30,7 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
     Rotate3d mTranslateAnimation2;
     int mCenterX = 240;
     int mCenterY = 155;
-    public static final int DURATION = 1000;
+    public static final int DURATION = 500;
     private RelativeLayout mRelativeLayout;
 
     public static int HEIGHT = 155;
@@ -48,7 +48,7 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
 
     private ArrayList<Drawable> mDrawableArrayList;
     private ArrayList<ImageView> mImageViewArrayList;
-    public static final int MAX_COUNT = 6;
+    public static final int MAX_COUNT = 4;
 
     /** Called when the activity is first created. */
     @Override
@@ -310,7 +310,7 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
     private boolean mAlreadyLastImageView = false;
 
     private void executeAnimation() {
-        printScale();
+        // printScale();
 
         if (!mAlreadyLastImageView) {
             addLastImageView(mImageViewArrayList);
@@ -450,7 +450,7 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
         // AlphaAnimation
     }
 
-    private float mScaleStep = 0.4f;
+    private float mScaleStep = 1f;
 
     private AnimationSet createAnimationSet(int index) {
         int length = mImageViewArrayList.size();
@@ -459,21 +459,30 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
         // animationSet.setDuration(DURATION);
         animationSet.setFillAfter(true);
         float scaleX = getScale(index);
+        Log.i(tag, "index=" + index + ",scaleX=" + scaleX);
+
         int newWidth = Rotate3dActivity.WIDTH - Rotate3dActivity.leftMarginStep * index
                 - Rotate3dActivity.rightMarginStep * index;
         ScaleAnimation scaleAnimation = new ScaleAnimation(1f, scaleX, 1f, 1f, newWidth / 2,
                 0f);
         scaleAnimation.setDuration(DURATION);
+        scaleAnimation.setFillAfter(true);
         animationSet.addAnimation(scaleAnimation);
 
-        AlphaAnimation alphaAnimation = new AlphaAnimation((length - index - 1) * mScaleStep,
-                (length - index) * mScaleStep);
+        float preScale = (length - index - 1) * mScaleStep;
+        float toScale = (length - index) * mScaleStep;
+        preScale = preScale > 1 ? 1 : preScale;
+        toScale = toScale > 1 ? 1 : toScale;
+
+        AlphaAnimation alphaAnimation = new AlphaAnimation(preScale, toScale);
         alphaAnimation.setDuration(DURATION);
+        alphaAnimation.setFillAfter(true);
         animationSet.addAnimation(alphaAnimation);
 
         TranslateAnimation translateAnimation = new TranslateAnimation(0, 0,
                 0, topMarginStep);
         translateAnimation.setDuration(DURATION);
+        translateAnimation.setFillAfter(true);
         animationSet.addAnimation(translateAnimation);
 
         // View view=new View(getApplicationContext());
