@@ -3,7 +3,6 @@ package me.pjq.rotate3d;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,11 +25,6 @@ import java.util.ArrayList;
 
 public class Rotate3dActivity extends Activity implements OnClickListener {
     private static final String tag = Rotate3dActivity.class.getSimpleName();
-    // ImageView mImageView1;
-    // ImageView mImageView2;
-    // ImageView mImageView3;
-    // ImageView mImageView4;
-
     Rotate3d mRotate3dAnimation;
     Rotate3d mTranslateAnimation1;
     Rotate3d mTranslateAnimation2;
@@ -71,7 +65,7 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
         }
 
         // CubeView cubeView=new CubeView(getApplicationContext());
-        MyCubeView cubeView = new MyCubeView(getApplicationContext());
+        // MyCubeView cubeView = new MyCubeView(getApplicationContext());
         // addContentView(cubeView, new LayoutParams(LayoutParams.FILL_PARENT,
         // LayoutParams.FILL_PARENT));
         // setContentView(cubeView, new LayoutParams(LayoutParams.FILL_PARENT,
@@ -90,7 +84,6 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                     WIDTH, HEIGHT);
 
-            // Last item,the same LayoutParams as the preview item.
             int stepCount = i;
             // if (i == COUNT - 1) {
             // stepCount -= 1;
@@ -182,40 +175,6 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
 
     }
 
-    private Rotate3d createAnimation() {
-        Rotate3d leftAnimation = new Rotate3d(-0, -60, 0, 0, mCenterX, mCenterY);
-        Rotate3d rightAnimation = new Rotate3d(-0 + 90, -60 + 90, 0.0f, 0.0f, mCenterX, mCenterY);
-
-        leftAnimation.setFillAfter(true);
-        leftAnimation.setDuration(DURATION);
-        rightAnimation.setFillAfter(true);
-        rightAnimation.setDuration(DURATION);
-
-        return leftAnimation;
-    }
-
-    int rotateDegree = -90;
-
-    private Rotate3d createleftAnimation() {
-        Rotate3d rightAnimation = new Rotate3d(-0, -90, 0, 0, mCenterX, mCenterY);
-
-        rightAnimation.setFillAfter(true);
-        rightAnimation.setDuration(DURATION);
-
-        return rightAnimation;
-    }
-
-    private Rotate3d createRightAnimation() {
-        // rotateDegree = 90 * mCount;
-        Rotate3d rightAnimation = new Rotate3d(90, -90 + 90, 0.0f, 0.0f,
-                mCenterX, mCenterY);
-
-        rightAnimation.setFillAfter(true);
-        rightAnimation.setDuration(DURATION);
-
-        return rightAnimation;
-    }
-
     private Rotate3d createRotateAnimation() {
         // rotateDegree = 90 * mCount;
         Rotate3d animation = new Rotate3d(0, 90, 0.0f, 0.0f,
@@ -229,7 +188,8 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
     }
 
     private int mStep = -70;
-    private int mTotal = -mStep * 2;
+
+    // private int mTotal = -mStep * 2;
 
     private Rotate3d createTranslateAnimation1() {
         // rotateDegree = 90 * mCount;
@@ -295,18 +255,6 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
         return animation;
     }
 
-    private Rotate3d createTranslateAnimation11() {
-        // rotateDegree = 90 * mCount;
-        Rotate3d animation = new Rotate3d(mTotal - mStep, mTotal - mStep * 2, 0.0f, 0.0f,
-                mCenterX, mCenterY);
-        animation.setType(TYPE.TRANSLATE);
-
-        // animation.setFillAfter(true);
-        animation.setDuration(DURATION);
-
-        return animation;
-    }
-
     private Rotate3d createTranslateAnimation2() {
         // rotateDegree = 90 * mCount;
         Rotate3d animation = new Rotate3d(0, mStep, 0.0f, 0.0f,
@@ -314,18 +262,6 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
         animation.setType(TYPE.TRANSLATE);
 
         // animation.setFillAfter(true);
-        animation.setDuration(DURATION);
-
-        return animation;
-    }
-
-    private Rotate3d createTranslateAnimation22() {
-        // rotateDegree = 90 * mCount;
-        Rotate3d animation = new Rotate3d(0, mTotal - mStep, 0.0f, 0.0f,
-                mCenterX, mCenterY);
-        animation.setType(TYPE.TRANSLATE);
-
-        animation.setFillAfter(true);
         animation.setDuration(DURATION);
 
         return animation;
@@ -416,7 +352,6 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
 
                     }
                 } else {
-
                     mImageViewArrayList.get(i).startAnimation(createAnimationSet(i));
                 }
 
@@ -465,8 +400,8 @@ public class Rotate3dActivity extends Activity implements OnClickListener {
         }
     }
 
-    private int mDeltaX;
-    private int mDeltaY;
+    // private int mDeltaX;
+    // private int mDeltaY;
     private int mLastMotionX;
     private int mLastMotionY;
 
